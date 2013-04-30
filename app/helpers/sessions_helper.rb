@@ -14,7 +14,7 @@ module SessionsHelper
   end
 
   def current_user
-    @current_user ||= user_from_remember_token
+    @current_user ||= User.find(session[:remember_token]) if session[:remember_token]
   end
 
   def sign_out
@@ -22,9 +22,4 @@ module SessionsHelper
     session[:remember_token] = nil
   end
 
-  private
-
-    def user_from_remember_token
-      User.find(session[:remember_token]) if session[:remember_token]
-    end
 end
