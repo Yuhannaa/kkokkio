@@ -1,7 +1,24 @@
-<div class="hero-unit">
-  <h1>StaticPages#home</h1>
-  <p>Find me in app/views/static_pages/home.html.erb</p>
-  <p>
-    <%= link_to "Sign up", signup_path, class: "btn btn-primary btn-large" %>
-  </p>
-</div>
+<% if signed_in? %>
+  <div class="row">
+    <aside class="span4">
+      <section>
+        <%= render 'shared/user_info' %>
+      </section>
+      <section>
+        <%= render 'shared/post_form' %>
+      </section>
+    </aside>
+    <div class="span8">
+      <h3>Post Feed</h3>
+      <%= render 'shared/feed' %>
+    </div>
+  </div>  
+<% else %>
+  <div class="hero-unit">
+    <h1>StaticPages#home</h1>
+    <p>Find me in app/views/static_pages/home.html.erb</p>
+    <p>
+      <%= link_to "Sign up", signup_path, class: "btn btn-primary btn-large" %>
+    </p>
+  </div>
+<% end %> 

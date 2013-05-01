@@ -10,10 +10,11 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @posts = @user.posts.paginate(page: params[:page])
   end
 
   def index
-    @users = User.paginate(page: params[:page], per_page: 15)
+    @users = User.paginate(page: params[:page], per_page: 10)
   end
 
   def create
@@ -54,13 +55,6 @@ class UsersController < ApplicationController
 
 
     # Before filters
-
-    def signed_in_user
-      unless signed_in?
-        store_location
-        redirect_to signin_url, notice: "Please sign in."
-      end 
-    end
 
     def non_signed_in_user
       redirect_to(root_path) if signed_in?
