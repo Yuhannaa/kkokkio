@@ -25,3 +25,6 @@ doc/
 
 # Ignore all helpfiles.
 /*.help
+
+# Ignore system file.
+/public/system/
