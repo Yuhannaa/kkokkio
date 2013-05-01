@@ -19,6 +19,8 @@ describe "AuthenticationPages" do
 
       it { should have_title('Sign in') }
       it { should have_selector('div.alert.alert-error', text: 'Invalid') }
+      it { should_not have_link('Profile') }
+      it { should_not have_link('Settings') }
 
       describe "after visiting another page" do
         before { click_link "Home" }
@@ -84,7 +86,36 @@ describe "AuthenticationPages" do
           it "should render the desired protected page" do
             expect(page).to have_title('Edit user')
           end
+
+          describe "when signing in again" do
+            before do
+              delete signout_path
+              sign_in user
+            end
+
+            it "should render the default (profile) page" do
+              expect(page).to have_title(user.name)
+            end
+          end
         end
+      end
+    end
+
+    describe "for signed-in user" do
+      let(:user) { FactoryGirl.create(:user) }
+      before { sign_in user }
+
+      describe "when attempting to visit sign-up page" do
+        before { visit signup_path }
+        it { should_not have_title('Sign up') }
+      end
+
+      describe "when submitting a POST request to the Users#create action" do
+        let(:params) do
+          { user: { name: "name", email: "email", password: "password", password_confirmation: "password" } }
+        end
+        before { post users_path, params }
+        specify { expect(response).to redirect_to(root_path) }
       end
     end
 
@@ -113,6 +144,16 @@ describe "AuthenticationPages" do
       describe "submitting a DELETE request to the Users#destroy action" do
         before { delete user_path(user) }
         specify { expect(response).to redirect_to(root_path) }        
+      end
+    end
+
+    describe "as admin user" do
+      let(:admin) { FactoryGirl.create(:admin) }
+      before { sign_in admin }
+
+      describe "submitting a DELETE request to destroy himself" do
+        before { delete user_path(admin) }
+        specify { expect(response).to redirect_to(root_path) }
       end
     end
   end
