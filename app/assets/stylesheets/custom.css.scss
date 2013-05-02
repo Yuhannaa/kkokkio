@@ -203,6 +203,9 @@ input {
   @extend .error;
 }
 
+.post_btn {
+  float: right;
+}
 /* Users index */
 
 .users {
@@ -231,8 +234,14 @@ input {
 }
 .content {
   display: block;
+  margin-bottom: 20px;
+  margin-left: 60px;
+}
+.photo {
+  margin-left: 60px;
 }
 .timestamp {
+  float: right;
   color: $grayLight;
 }
 .gravatar {

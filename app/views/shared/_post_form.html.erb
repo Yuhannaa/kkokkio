@@ -3,6 +3,12 @@
   <div class="field">
     <%= f.text_area :content, placeholder: "Compose new post..." %>
   </div>
-  <%= f.file_field :photo %>
-  <%= f.submit "Post", class: "btn btn-large btn-primary" %>
+  <span class="btn btn-success fileinput-button">
+    <i class="icon-camera icon-white"></i>
+    <%= f.file_field :photo %>
+  </span>
+  <span class="post_btn">
+    <%= f.submit "Post", class: "btn btn-large btn-primary" %>
+  </span>
+  
 <% end %>
