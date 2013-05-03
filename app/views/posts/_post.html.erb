@@ -1,11 +1,18 @@
 <li>
-  <span class="content"><%= post.content %></span>
-  <span class="timestamp">
-    Posted <%= time_ago_in_words(post.created_at) %> ago.
+  <%= link_to gravatar_for(post.user), post.user %>
+  <span class="user">
+    <%= link_to post.user.name, post.user %>
   </span>
-  <% if current_user?(post.user) %>
-    <%= link_to "delete", post, method: :delete,
-                                     data: { confirm: "You sure?" },
-                                     title: post.content %>
+  <span class="timestamp">
+    <%= time_ago_in_words(post.created_at) %> ago.
+    <% if current_user?(post.user) %>
+      <%= link_to post, method: :delete, data: { confirm: "You sure?" }, title: post.content, class: "delete"  do %>
+        <i class="icon-trash"></i>
+      <% end %>
+    <% end %>
+  </span>
+  <span class="content"><%= post.content %></span>
+  <% unless post.photo.blank? %>
+    <span><%= image_tag post.photo.url(:medium), class: "photo" %></span>
   <% end %>
 </li>
