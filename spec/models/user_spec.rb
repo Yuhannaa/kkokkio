@@ -149,13 +149,22 @@ describe User do
     end
 
     describe "status" do
-      let(:unfollowed_post) do
-        FactoryGirl.create(:post, user: FactoryGirl.create(:user))
+      let(:unfollowed_post) { FactoryGirl.create(:post, user: FactoryGirl.create(:user)) }
+      let(:followed_user) { FactoryGirl.create(:user) }
+
+      before do
+        @user.follow!(followed_user)
+        3.times { followed_user.posts.create!(content: "Lorem ipsum") }
       end
 
       its(:feed) { should include(newer_post) }
       its(:feed) { should include(older_post) }
       its(:feed) { should_not include(unfollowed_post) }
+      its(:feed) do
+        followed_user.posts.each do |post|
+          should include(post)
+        end
+      end
     end
   end
 

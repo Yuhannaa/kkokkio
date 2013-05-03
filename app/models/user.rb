@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 6 }
 
   def feed
-    Post.where("user_id = ?", id)
+    Post.from_users_followed_by(self)
   end
 
   def following?(other_user)
