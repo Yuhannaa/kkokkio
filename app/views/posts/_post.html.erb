@@ -6,7 +6,7 @@
   <span class="timestamp">
     <%= time_ago_in_words(post.created_at) %> ago.
     <% if current_user?(post.user) %>
-      <%= link_to post, method: :delete, data: { confirm: "You sure?" }, title: post.content, class: "delete"  do %>
+      <%= link_to post, method: :delete, data: { confirm: "정말 삭제할까요?" }, title: "삭제하기", class: "delete"  do %>
         <i class="icon-trash"></i>
       <% end %>
     <% end %>
