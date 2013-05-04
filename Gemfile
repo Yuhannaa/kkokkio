@@ -10,6 +10,7 @@ gem 'bootstrap-will_paginate', '0.0.9'
 gem 'rmagick', '2.13.2'
 gem "paperclip", "~> 3.0" # 3.4.1
 gem "jquery-fileupload-rails"
+gem "paperclip-dropbox"
 gem 'pg', '0.14.1'
 
 group :development, :test do
