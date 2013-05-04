@@ -1,10 +1,11 @@
 class Post < ActiveRecord::Base
   belongs_to :user
   default_scope -> { order('created_at DESC') }
-  has_attached_file :photo, :styles => { medium: "300x300>", thumb: "100x100>", default_url: ""
+  # uploading a file with a duplicate name will throw error. It should be improved
+  has_attached_file :photo, :styles => { medium: "300x300>", thumb: "100x100>" },
                     :storage => :dropbox,
                     :dropbox_credentials => "#{Rails.root}/config/dropbox.yml",
-                    :dropbox_options => {} }
+                    :dropbox_options => { :path => proc { |style| "#{style}/#{id}_#{photo.original_filename}" } }
   validates :user_id, presence: true
   validates :content, presence: true
 
