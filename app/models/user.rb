@@ -32,4 +32,16 @@ class User < ActiveRecord::Base
   def unfollow!(other_user)
     relationships.find_by(followed_id: other_user.id).destroy
   end
+
+  def mark_favorite!(post)
+    favorites.create!(post_id: post.id)
+  end
+
+  def unmark_favorite!(post)
+    favorites.find_by(post_id: post.id).destroy
+  end
+
+  def favorite?(post)
+    favorites.find_by(post_id: post.id)
+  end
 end

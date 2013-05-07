@@ -2,7 +2,7 @@ class Post < ActiveRecord::Base
   belongs_to :user
   has_many :favorites, dependent: :destroy
   has_many :favorer, through: :favorites, source: :user
-  default_scope -> { order('created_at DESC') }
+  default_scope -> { order("#{table_name}.created_at DESC") }
   validates :user_id, presence: true
   validates :content, presence: true
 

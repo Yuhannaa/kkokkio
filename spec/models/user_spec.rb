@@ -21,6 +21,10 @@ describe User do
   it { should respond_to(:reverse_relationships) }
   it { should respond_to(:followers) }
   it { should respond_to(:favorites) }
+  it { should respond_to(:favorite_posts) }  
+  it { should respond_to(:favorite?) }
+  it { should respond_to(:mark_favorite!) }
+  it { should respond_to(:unmark_favorite!) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -150,7 +154,7 @@ describe User do
     end
 
     describe "status" do
-      let(:unfollowed_post) { FactoryGirl.create(:post, user: FactoryGirl.create(:user)) }
+      let!(:unfollowed_post) { FactoryGirl.create(:post, user: FactoryGirl.create(:user)) }
       let(:followed_user) { FactoryGirl.create(:user) }
 
       before do
@@ -189,6 +193,29 @@ describe User do
 
       it { should_not be_following(other_user) }
       its(:followed_users) { should_not include(other_user) }
+    end
+  end
+
+  describe "mark favorite" do
+    let!(:post) { FactoryGirl.create(:post, user: FactoryGirl.create(:user)) }
+    before do
+      @user.save
+      @user.mark_favorite!(post)
+    end
+
+    it { should be_favorite(post) }
+    its(:favorite_posts) { should include(post) }
+
+    describe "favorer" do
+      subject { post }
+      its(:favorer) { should include(@user)}
+    end
+
+    describe "and unmark favorite" do
+      before { @user.unmark_favorite!(post) }
+
+      it { should_not be_favorite(post) }
+      its(:favorite_posts) { should_not include(post) }
     end
   end
 end
