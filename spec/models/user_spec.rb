@@ -20,6 +20,7 @@ describe User do
   it { should respond_to(:followed_users) }
   it { should respond_to(:reverse_relationships) }
   it { should respond_to(:followers) }
+  it { should respond_to(:favorites) }
 
   it { should be_valid }
   it { should_not be_admin }

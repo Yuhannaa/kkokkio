@@ -11,6 +11,7 @@ describe Post do
   it { should respond_to(:user_id) }
   it { should respond_to(:user) }
   its(:user) { should eql(user) }
+  it { should respond_to(:favorites) }
 
   it { should be_valid }
 
