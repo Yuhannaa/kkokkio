@@ -22,9 +22,9 @@ describe User do
   it { should respond_to(:followers) }
   it { should respond_to(:favorites) }
   it { should respond_to(:favorite_posts) }  
-  it { should respond_to(:favorite?) }
-  it { should respond_to(:mark_favorite!) }
-  it { should respond_to(:unmark_favorite!) }
+  it { should respond_to(:favorited?) }
+  it { should respond_to(:favorite!) }
+  it { should respond_to(:undo_favorite!) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -196,14 +196,14 @@ describe User do
     end
   end
 
-  describe "mark favorite" do
+  describe "favoriting" do
     let!(:post) { FactoryGirl.create(:post, user: FactoryGirl.create(:user)) }
     before do
       @user.save
-      @user.mark_favorite!(post)
+      @user.favorite!(post)
     end
 
-    it { should be_favorite(post) }
+    it { should be_favorited(post) }
     its(:favorite_posts) { should include(post) }
 
     describe "favorer" do
@@ -211,10 +211,10 @@ describe User do
       its(:favorer) { should include(@user)}
     end
 
-    describe "and unmark favorite" do
-      before { @user.unmark_favorite!(post) }
+    describe "and undoing favorite" do
+      before { @user.undo_favorite!(post) }
 
-      it { should_not be_favorite(post) }
+      it { should_not be_favorited(post) }
       its(:favorite_posts) { should_not include(post) }
     end
   end

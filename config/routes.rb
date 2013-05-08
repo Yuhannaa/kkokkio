@@ -1,12 +1,13 @@
 Kkokkio::Application.routes.draw do
   resources :users do
     member do
-      get :following, :followers
+      get :following, :followers, :favorites
     end
   end
   resources :sessions, only: [:new, :create, :destroy]
   resources :posts, only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
+  resources :favorites, only: [:create, :destroy]
   root to: 'static_pages#home'
 
   match '/about', to: 'static_pages#about', via: 'get'

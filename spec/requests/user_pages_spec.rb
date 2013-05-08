@@ -50,13 +50,6 @@ describe "UserPages" do
     end
   end
 
-  describe "signup page" do
-    before { visit signup_path }
-
-    it { should have_content('Sign up') }
-    it { should have_title(full_title('Sign up')) }
-  end
-
   describe "profile page" do
     let(:user) { FactoryGirl.create(:user) }
     let!(:m1) { FactoryGirl.create(:post, user: user, content: "Foo") }
@@ -127,6 +120,9 @@ describe "UserPages" do
   describe "signup" do
 
     before { visit signup_path }
+
+    it { should have_content('Sign up') }
+    it { should have_title(full_title('Sign up')) }
 
     let(:submit) { "Create my account" }
 
@@ -238,5 +234,19 @@ describe "UserPages" do
       it { should have_selector('h3', text: 'Followers') }
       it { should have_link(user.name, href: user_path(user)) }
     end
+  end
+
+  describe "Favorites" do
+    let(:user) { FactoryGirl.create(:user) }
+    let(:favorite_post) { FactoryGirl.create(:post, user: FactoryGirl.create(:user)) }
+    before do
+      sign_in user
+      user.favorite!(favorite_post)
+      visit favorites_user_path(user)
+    end
+
+    it { should have_title(full_title('Favorite Posts')) }
+    it { should have_selector('h3', text: "Favorite Posts") }
+    it { should have_content(favorite_post.content) }
   end
 end

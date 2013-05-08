@@ -33,15 +33,17 @@ class User < ActiveRecord::Base
     relationships.find_by(followed_id: other_user.id).destroy
   end
 
-  def mark_favorite!(post)
+  # To mark a post as a favorite
+  def favorite!(post)
     favorites.create!(post_id: post.id)
   end
 
-  def unmark_favorite!(post)
+  # To undo or remove a favorite
+  def undo_favorite!(post)
     favorites.find_by(post_id: post.id).destroy
   end
 
-  def favorite?(post)
+  def favorited?(post)
     favorites.find_by(post_id: post.id)
   end
 end

@@ -4,6 +4,7 @@ namespace :db do
     make_users
     make_posts
     make_relationships
+    make_favorites
   end
 end
 
@@ -39,4 +40,11 @@ def make_relationships
   followers      = users[3..40]
   followed_users.each { |followed| user.follow!(followed) }
   followers.each      { |follower| follower.follow!(user) }
+end
+
+def make_favorites
+  user = User.first
+  posts = Post.all
+  favorite_posts = posts[1..50]
+  favorite_posts.each { |favorite_post| user.mark_favorite!(favorite_post) }
 end
