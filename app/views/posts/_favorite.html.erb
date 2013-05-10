@@ -1,0 +1,4 @@
+<%= form_for(current_user.favorites.build(post_id: post.id)) do |f| %>
+  <div><%= f.hidden_field :post_id %></div>
+  <%= f.submit "Favorite", class: "btn btn-primary favorite-btn" %>
+<% end %>

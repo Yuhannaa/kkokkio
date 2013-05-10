@@ -40,55 +40,57 @@ describe "StaticPages" do
         it { should have_link("1 followers", href: followers_user_path(user)) }
       end
 
-      # describe "follow/unfollow buttons" do
-      #   let(:other_user) { FactoryGirl.create(:user) }
-      #   before { sign_in user }
+      describe "favorite/undo favorite buttons" do
+        let(:other_user) { FactoryGirl.create(:user) }
+        let!(:favorite_post) { FactoryGirl.create(:post, user: other_user) }
+        before do
+          user.follow!(other_user)
+          visit root_path
+        end
 
-      #   describe "following a user" do
-      #     before { visit user_path(other_user) }
+        describe "favoriting a post" do
+          it "should increment the user's favorite posts count" do
+            expect do
+              page.first(".favorite-btn").click
+            end.to change(user.favorite_posts, :count).by(1)
+          end
 
-      #     it "should increment the followed user count" do
-      #       expect do
-      #         click_button "Follow"
-      #       end.to change(user.followed_users, :count).by(1)
-      #     end
+          it "should increment the post's favorers count" do
+            expect do
+              page.first(".favorite-btn").click
+            end.to change(favorite_post.favorers, :count).by(1)
+          end
 
-      #     it "should increment the other user's followers count" do
-      #       expect do
-      #         click_button "Follow"
-      #       end.to change(other_user.followers, :count).by(1)
-      #     end
+          describe "toggling the button" do
+            before { page.first(".favorite-btn").click }
+            it { should have_xpath("//input[@value='Favorited']") }
+          end
+        end
 
-      #     describe "toggling the button" do
-      #       before { click_button "Follow" }
-      #       it { should have_xpath("//input[@value='Unfollow']") }
-      #     end
-      #   end
+        describe "undoing favorite a post" do
+          before do
+            user.favorite!(favorite_post)
+            visit root_path
+          end
 
-      #   describe "unfollowing a user" do
-      #     before do
-      #       user.follow!(other_user)
-      #       visit user_path(other_user)
-      #     end
+          it "should decrement the user's favorite posts count" do
+            expect do
+              click_button "Favorited"
+            end.to change(user.favorite_posts, :count).by(-1)
+          end
 
-      #     it "should decrement the followed user count" do
-      #       expect do
-      #         click_button "Unfollow"
-      #       end.to change(user.followed_users, :count).by(-1)
-      #     end
+          it "should decrement the post's favorers count" do
+            expect do
+              click_button "Favorited"
+            end.to change(favorite_post.favorers, :count).by(-1)
+          end
 
-      #     it "should decrement the other user's followers count" do
-      #       expect do
-      #         click_button "Unfollow"
-      #       end.to change(other_user.followers, :count).by(-1)
-      #     end
-
-      #     describe "toggling the button" do
-      #       before { click_button "Unfollow" }
-      #       it { should have_xpath("//input[@value='Follow']") }
-      #     end
-      #   end
-      # end
+          describe "toggling the button" do
+            before { click_button "Favorited" }
+            it { should have_xpath("//input[@value='Favorite']") }
+          end
+        end
+      end
     end
   end
 

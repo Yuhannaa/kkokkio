@@ -38,7 +38,7 @@ describe "PostPages" do
       before { visit root_path }
 
       it "should delete a post" do
-        expect { page.first(".delete").click }.to change(Post, :count).by(-1)
+        expect { page.first(".delete-btn").click }.to change(Post, :count).by(-1)
       end
     end
   end

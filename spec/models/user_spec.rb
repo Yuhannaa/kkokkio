@@ -206,9 +206,9 @@ describe User do
     it { should be_favorited(post) }
     its(:favorite_posts) { should include(post) }
 
-    describe "favorer" do
+    describe "favorers" do
       subject { post }
-      its(:favorer) { should include(@user)}
+      its(:favorers) { should include(@user)}
     end
 
     describe "and undoing favorite" do
