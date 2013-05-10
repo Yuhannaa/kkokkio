@@ -1,4 +1,4 @@
-  <span id="favorite">
+  <span id="favorite_form_<%= post.id %>">
   <% if current_user.favorited?(post) %>
     <%= render 'posts/undo_favorite', post: post %>
   <% else %>
