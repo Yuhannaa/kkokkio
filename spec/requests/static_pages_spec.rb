@@ -63,7 +63,7 @@ describe "StaticPages" do
 
           describe "toggling the button" do
             before { page.first(".favorite-btn").click }
-            it { should have_xpath("//input[@value='Favorited']") }
+            it { should have_xpath("//button[@class='favorited-btn']") }
           end
         end
 
@@ -87,7 +87,7 @@ describe "StaticPages" do
 
           describe "toggling the button" do
             before { click_button "Favorited" }
-            it { should have_xpath("//input[@value='Favorite']") }
+            it { should have_xpath("//button[@class='favorite-btn']") }
           end
         end
       end
