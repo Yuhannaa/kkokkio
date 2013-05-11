@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :favorites, dependent: :destroy
   has_many :favorite_posts, through: :favorites, source: :post
   before_save { email.downcase! }
+  default_scope -> { order("#{table_name}.created_at DESC") }
 
   validates :name, presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i

@@ -36,7 +36,7 @@ describe "AuthenticationPages" do
         click_button "Sign in"
       end
 
-      it { should have_title(user.name) }
+      it { should have_title(full_title('')) }
       it { should have_link('Users', href: users_path) }
       it { should have_link('Profile', href: user_path(user)) }
       it { should have_link('Settings', href: edit_user_path(user)) }
@@ -145,8 +145,8 @@ describe "AuthenticationPages" do
               sign_in user
             end
 
-            it "should render the default (profile) page" do
-              expect(page).to have_title(user.name)
+            it "should render the default (home) page" do
+              expect(page).to have_title(full_title(''))
             end
           end
         end

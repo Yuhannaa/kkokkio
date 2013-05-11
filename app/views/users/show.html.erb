@@ -10,7 +10,6 @@
     <section>
       <%= render 'shared/stats' %>
     </section>
-    <li><%= link_to "Favorites", favorites_user_path(@user) %></li>
   </aside>
   <div class="span6">
     <%= render 'follow_form' if signed_in? %>
