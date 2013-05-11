@@ -46,5 +46,5 @@ def make_favorites
   user = User.first
   posts = Post.all
   favorite_posts = posts[1..50]
-  favorite_posts.each { |favorite_post| user.mark_favorite!(favorite_post) }
+  favorite_posts.each { |favorite_post| user.favorite!(favorite_post) }
 end
