@@ -1,21 +1,39 @@
 <li id="<%= post.id %>">
-  <%= link_to gravatar_for(post.user), post.user %>
-  <span class="user">
-    <%= link_to post.user.name, post.user %>
-  </span>
-  <span class="timestamp">
-    <%= time_ago_in_words(post.created_at) %> ago.
-    <% if current_user?(post.user) %>
-      <%= link_to post, method: :delete, data: { confirm: "정말 삭제할까요?" }, title: "삭제하기", class: "delete-btn"  do %>
-        <i class="icon-trash"></i>
+  <div class="media">
+    <%= link_to gravatar_for(post.user, { size: 48, class: "media-object gravatar" }),
+                post.user, class: "pull-left" %>
+    <div class="media-body">
+      <h5 class="media-heading">
+        <span class="user">
+          <%= link_to post.user.name, post.user %>
+        </span>
+        <span class="timestamp">
+          <%= time_ago_in_words(post.created_at) %>
+        </span>
+      </h5>
+      <span class="content"><%= post.content %></span>
+      <% unless post.photo.blank? %>
+        <span><%= image_tag post.photo.url(:medium), class: "photo img-polaroid" %></span>
       <% end %>
-    <% end %>
-  </span>
-  <span class="content"><%= post.content %></span>
-  <% unless post.photo.blank? %>
-    <span><%= image_tag post.photo.url(:medium), class: "photo" %></span>
-  <% end %>
-  <% if signed_in? %>
-    <%= render 'posts/favorite_form', post: post %>
-  <% end %>
+      <ul class="inline">
+        <li>
+          <button class="comment-btn" data-toggle="collapse" data-target="#comment-<%= post.id %>">
+            <i class="icon-comment"></i> Comment
+          </button>
+        </li>
+        <li>
+          <% if signed_in? %>
+            <%= render 'posts/favorite_form', post: post %>
+          <% end %>
+        </li>
+        <li>
+          <% if current_user?(post.user) %>
+            <%= render 'posts/delete_form', post: post %>
+          <% end %>
+        </li>
+      </ul>
+      <div id="comment-<%= post.id %>" class="collapse out">comment demo</div>
+    </div>
+  </div>
 </li>
+

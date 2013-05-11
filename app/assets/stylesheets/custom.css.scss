@@ -230,23 +230,20 @@ input {
   li {
     padding: 10px 0;
     border-top: 1px solid #e8e8e8;
+    ul.inline li {
+      border: none;
+    }
   }
 }
 .content {
   display: block;
-  margin-bottom: 20px;
-  margin-left: 60px;
 }
 .photo {
-  margin-left: 60px;
+  margin-top: 10px;
 }
 .timestamp {
   float: right;
   color: $grayLight;
-}
-.gravatar {
-  float: left;
-  margin-right: 10px;
 }
 aside {
   textarea {
@@ -254,15 +251,20 @@ aside {
     margin-bottom: 5px;
   }
 }
-.favorite-btn {
-   border: none;
-   background-color: transparent;
-   padding: 0;
-   color: #000000;
+.new_favorite {
+  display: inline;
+}
+.edit_favorite {
+  display: inline;
+}
+.comment-btn, .favorite-btn, .favorited-btn, .delete-btn {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+}
+.comment-btn, .favorite-btn, .delete-btn {
+  color: $grayLight;
 }
 .favorited-btn {
-   border: none;
-   background-color: transparent;
-   padding: 0;
-   color: #FF9900;
+  color: #FF9900;
 }
